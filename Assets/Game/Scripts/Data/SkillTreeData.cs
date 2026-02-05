@@ -10,8 +10,6 @@ public class SkillTreeNodeData {
     [JsonProperty("id")] public int Id;
     [JsonProperty("position")] public Vector2 Position;
     [JsonProperty("data")] public Dictionary<string, string> Data = new();
-
-    [JsonIgnore] public bool IsUnlocked;
 }
 
 [Serializable]

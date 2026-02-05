@@ -13,6 +13,7 @@ public class SkillTreeNodeView : MonoBehaviour, IPointerClickHandler {
     }
 
     public void OnPointerClick(PointerEventData eventData) {
+        WindowsScreen.Instance.ShowNodeWindow(this);
     }
 }
 }
