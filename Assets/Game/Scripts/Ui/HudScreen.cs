@@ -3,9 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Ui {
-public class HudScreen : MonoBehaviour {
+public class HudScreen : UiScreen {
     [SerializeField] private Button _createTreeButton;
     [SerializeField] private Button _exportButton;
+
+    protected override void TurnOnOffByDefault() {
+        TurnOn();
+    }
 
     private void Awake() {
         _createTreeButton.onClick.AddListener(OnCreateTreeClicked);

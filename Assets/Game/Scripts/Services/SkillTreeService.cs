@@ -8,6 +8,7 @@ public class SkillTreeService : MonoBehaviour {
     public static SkillTreeService Instance;
 
     public event Action<SkillTreeData> TreeCreated;
+    public event Action<string> Exported;
 
     private void Awake() {
         Instance = this;
@@ -31,7 +32,7 @@ public class SkillTreeService : MonoBehaviour {
     }
 
     public void ExportTree() {
-        throw new NotImplementedException();
+        Exported?.Invoke("hi json");
     }
 }
 }
