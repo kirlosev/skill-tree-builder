@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Services;
 using StbData;
 using UnityEngine;
 
@@ -14,6 +15,31 @@ public class SkillTreeView : MonoBehaviour {
     private Dictionary<int, SkillTreeNodeView> _nodeViews = new();
     private List<SkillTreeConnectorView> _connectorViews = new();
 
+    private void Start() {
+        SkillTreeService.Instance.TreeCreated += OnNewTreeCreated;
+    }
+
+    private void OnDestroy() {
+        SkillTreeService.Instance.TreeCreated -= OnNewTreeCreated;
+    }
+
+    private void OnNewTreeCreated(SkillTreeData newTreeData) {
+        RemoveCurrentTree();
+        Setup(newTreeData);
+    }
+
+    private void RemoveCurrentTree() {
+        foreach (Transform n in _nodeHolder) {
+            Destroy(n.gameObject);
+        }
+        _nodeViews.Clear();
+
+        foreach (Transform c in _connectorHolder) {
+            Destroy(c.gameObject);
+        }
+        _connectorViews.Clear();
+    }
+
     public void Setup(SkillTreeData data) {
         _data = data;
 
@@ -28,6 +54,8 @@ public class SkillTreeView : MonoBehaviour {
             var toView = _nodeViews[c.ToNodeId];
             var v = Instantiate(_connectorPrefab, fromView.Pos, Quaternion.identity, _connectorHolder);
             v.Setup(c, fromView, toView);
+
+            // TODO save connectors
         }
     }
 }
