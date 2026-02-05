@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using StbData;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class SkillTreeService : MonoBehaviour {
     public event Action<SkillTreeData> TreeCreated;
     public event Action<string> Exported;
 
+    private SkillTreeData _data;
+
     private void Awake() {
         Instance = this;
     }
@@ -18,13 +21,13 @@ public class SkillTreeService : MonoBehaviour {
         var firstNodeData = new SkillTreeNodeData() {
             Id = 0, Position = Vector2.zero, Data = new()
         };
-        var treeData = new SkillTreeData() {
+        _data = new SkillTreeData() {
             Id = "new_tree",
             Nodes = new List<SkillTreeNodeData>() { firstNodeData },
             AnchorPosition = Vector2.zero,
             Connectors = new List<SkillTreeConnectorData>()
         };
-        TreeCreated?.Invoke(treeData);
+        TreeCreated?.Invoke(_data);
     }
 
     public void LoadTree() {
@@ -32,7 +35,13 @@ public class SkillTreeService : MonoBehaviour {
     }
 
     public void ExportTree() {
-        Exported?.Invoke("hi json");
+        var settings = new JsonSerializerSettings
+        {
+            Converters = new List<JsonConverter> { new Vector2Converter() },
+            Formatting = Formatting.Indented
+        };
+        var json = JsonConvert.SerializeObject(_data, settings);
+        Exported?.Invoke(json);
     }
 }
 }
