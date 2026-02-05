@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Scripts.Ui {
+namespace Ui {
 public abstract class UiScreen : MonoBehaviour {
     [SerializeField] protected Transform Content;
 

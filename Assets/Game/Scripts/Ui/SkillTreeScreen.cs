@@ -1,16 +1,26 @@
+using StbData;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Game.Scripts.Ui {
+namespace Ui {
 public class SkillTreeScreen : UiScreen, IBeginDragHandler, IDragHandler, IEndDragHandler {
-    [SerializeField] private RectTransform _skillTreeRect;
+    [SerializeField] private SkillTreeView _skillTree;
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _friction = 15f;
 
+    private RectTransform _skillTreeRect;
     private Vector2 _treeVelocity;
+
+    private void Awake() {
+        _skillTreeRect = (RectTransform)_skillTree.transform;
+    }
 
     protected override void TurnOnOffByDefault() {
         TurnOn();
+    }
+
+    public void Setup(SkillTreeData skillTreeData) {
+        _skillTree.Setup(skillTreeData);
     }
 
     private void Update() {
