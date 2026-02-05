@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Ui {
 public class Window : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler {
+    public event Action Closed;
+
     [SerializeField] private Button _closeButton;
 
     private RectTransform _rect;
@@ -17,6 +20,7 @@ public class Window : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     }
 
     private void OnCloseClicked() {
+        Closed?.Invoke();
         Destroy(gameObject);
     }
 
