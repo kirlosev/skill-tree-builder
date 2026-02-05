@@ -127,3 +127,6 @@ fmod_editor.log
 /Fmod/LabMonster/.user
 
 *.VC.db
+
+/[Aa]ssets/TextMesh Pro
+/[Aa]ssets/TextMesh Pro.meta
