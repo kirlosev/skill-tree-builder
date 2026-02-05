@@ -18,6 +18,14 @@ public class WindowsScreen : UiScreen {
 
     public void ShowNodeWindow(SkillTreeNodeView nodeView) {
         var window = Instantiate(_nodeWindowPrefab, _windowsHolder);
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            _windowsHolder,
+            Input.mousePosition,
+            Camera.main,
+            out var localPos
+        );
+        ((RectTransform)window.transform).anchoredPosition = localPos;
         window.Setup(nodeView.Data);
     }
 }
