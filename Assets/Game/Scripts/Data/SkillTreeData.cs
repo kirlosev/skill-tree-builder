@@ -16,7 +16,6 @@ public class SkillTreeNodeData {
 public class SkillTreeLinkData {
     [JsonProperty("from_id")] public int FromNodeId;
     [JsonProperty("to_id")] public int ToNodeId;
-    [JsonProperty("is_two_way")] public bool IsTwoWay = true;
 }
 
 [Serializable]

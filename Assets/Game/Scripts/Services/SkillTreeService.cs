@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using StbData;
@@ -57,13 +58,24 @@ public class SkillTreeService : MonoBehaviour {
     }
 
     public void LinkNodes(SkillTreeNodeView fromNode, SkillTreeNodeView toNode) {
+        var alreadyLinked = _data.Links.Count(x => x.FromNodeId == fromNode.Data.Id && x.ToNodeId == toNode.Data.Id) > 0;
+        if (alreadyLinked) {
+            return;
+        }
+
         var link = new SkillTreeLinkData() {
             FromNodeId = fromNode.Data.Id,
-            ToNodeId = toNode.Data.Id,
-            IsTwoWay = true
+            ToNodeId = toNode.Data.Id
         };
         _data.Links.Add(link);
         LinkAdded?.Invoke(link);
+        // if IsTwoWay
+        var reverse = new SkillTreeLinkData() {
+            FromNodeId = toNode.Data.Id,
+            ToNodeId = fromNode.Data.Id
+        };
+        _data.Links.Add(reverse);
+        LinkAdded?.Invoke(reverse);
     }
 
     public void ExportTree() {
