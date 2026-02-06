@@ -24,11 +24,13 @@ public class SkillTreeView : MonoBehaviour {
     private void Start() {
         SkillTreeService.Instance.TreeCreated += OnNewTreeCreated;
         SkillTreeService.Instance.NodeAdded += OnNodeAdded;
+        SkillTreeService.Instance.LinkAdded += OnLinkAdded;
     }
 
     private void OnDestroy() {
         SkillTreeService.Instance.TreeCreated -= OnNewTreeCreated;
         SkillTreeService.Instance.NodeAdded -= OnNodeAdded;
+        SkillTreeService.Instance.LinkAdded -= OnLinkAdded;
     }
 
     private void OnNewTreeCreated(SkillTreeData newTreeData) {
@@ -38,6 +40,10 @@ public class SkillTreeView : MonoBehaviour {
 
     private void OnNodeAdded(SkillTreeNodeData newNodeData) {
         SpawnNode(newNodeData);
+    }
+
+    private void OnLinkAdded(SkillTreeLinkData newLinkData) {
+        SpawnLink(newLinkData);
     }
 
     private void RemoveCurrentTree() {
@@ -59,13 +65,8 @@ public class SkillTreeView : MonoBehaviour {
             SpawnNode(n);
         }
 
-        foreach (var c in _data.Links) {
-            var fromView = _nodeViews[c.FromNodeId];
-            var toView = _nodeViews[c.ToNodeId];
-            var v = Instantiate(_linkPrefab, fromView.Pos, Quaternion.identity, _linkHolder);
-            v.Setup(c, fromView, toView);
-
-            // TODO save links
+        foreach (var l in _data.Links) {
+            SpawnLink(l);
         }
     }
 
@@ -76,15 +77,19 @@ public class SkillTreeView : MonoBehaviour {
         _nodeViews[nodeData.Id] = v;
     }
 
+    private void SpawnLink(SkillTreeLinkData linkData) {
+        var fromView = _nodeViews[linkData.FromNodeId];
+        var toView = _nodeViews[linkData.ToNodeId];
+        var v = Instantiate(_linkPrefab, _linkHolder);
+        v.Setup(linkData, fromView, toView);
+    }
+
     public SkillTreeNodeView GetNodeOnPosition(Vector2 position) {
         foreach (var (id, view) in _nodeViews) {
             if (view.ContainsPosition(position)) {
-                Debug.Log($"{id} contains {position}");
                 return view;
             }
         }
-
-        Debug.Log($"None of views contain {position}");
         return null;
     }
 }

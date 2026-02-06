@@ -11,6 +11,7 @@ public class SkillTreeService : MonoBehaviour {
 
     public event Action<SkillTreeData> TreeCreated;
     public event Action<SkillTreeNodeData> NodeAdded;
+    public event Action<SkillTreeLinkData> LinkAdded;
     public event Action<string> Exported;
 
     private SkillTreeData _data;
@@ -55,6 +56,16 @@ public class SkillTreeService : MonoBehaviour {
         NodeAdded?.Invoke(nodeData);
     }
 
+    public void LinkNodes(SkillTreeNodeView fromNode, SkillTreeNodeView toNode) {
+        var link = new SkillTreeLinkData() {
+            FromNodeId = fromNode.Data.Id,
+            ToNodeId = toNode.Data.Id,
+            IsTwoWay = true
+        };
+        _data.Links.Add(link);
+        LinkAdded?.Invoke(link);
+    }
+
     public void ExportTree() {
         var settings = new JsonSerializerSettings
         {
@@ -63,15 +74,6 @@ public class SkillTreeService : MonoBehaviour {
         };
         var json = JsonConvert.SerializeObject(_data, settings);
         Exported?.Invoke(json);
-    }
-
-    public void LinkNodes(SkillTreeNodeView fromNode, SkillTreeNodeView toNode) {
-        var link = new SkillTreeLinkData() {
-            FromNodeId = fromNode.Data.Id,
-            ToNodeId = toNode.Data.Id,
-            IsTwoWay = true
-        };
-        _data.Links.Add(link);
     }
 
     public void RemoveLink(SkillTreeNodeView fromNode, SkillTreeNodeView toNode) {
