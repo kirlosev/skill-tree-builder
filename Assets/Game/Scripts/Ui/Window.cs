@@ -53,8 +53,11 @@ public class Window : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     {
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
+    public void OnPointerDown(PointerEventData eventData) {
+        BringToTop();
+    }
+
+    public void BringToTop() {
         _rect.SetAsLastSibling();
     }
 }

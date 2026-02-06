@@ -11,21 +11,32 @@ public class SkillTreeView : MonoBehaviour {
     [SerializeField] private RectTransform _nodeHolder;
     [SerializeField] private RectTransform _connectorHolder;
 
+    private RectTransform _rect;
     private SkillTreeData _data;
     private Dictionary<int, SkillTreeNodeView> _nodeViews = new();
     private List<SkillTreeConnectorView> _connectorViews = new();
 
+    private void Awake() {
+        _rect = (RectTransform)transform;
+    }
+
     private void Start() {
         SkillTreeService.Instance.TreeCreated += OnNewTreeCreated;
+        SkillTreeService.Instance.NodeAdded += OnNodeAdded;
     }
 
     private void OnDestroy() {
         SkillTreeService.Instance.TreeCreated -= OnNewTreeCreated;
+        SkillTreeService.Instance.NodeAdded -= OnNodeAdded;
     }
 
     private void OnNewTreeCreated(SkillTreeData newTreeData) {
         RemoveCurrentTree();
         Setup(newTreeData);
+    }
+
+    private void OnNodeAdded(SkillTreeNodeData newNodeData) {
+        SpawnNode(newNodeData);
     }
 
     private void RemoveCurrentTree() {
@@ -44,9 +55,7 @@ public class SkillTreeView : MonoBehaviour {
         _data = data;
 
         foreach (var n in _data.Nodes) {
-            var v = Instantiate(_nodePrefab, n.Position, Quaternion.identity, _nodeHolder);
-            v.Setup(n);
-            _nodeViews[n.Id] = v;
+            SpawnNode(n);
         }
 
         foreach (var c in _data.Connectors) {
@@ -57,6 +66,13 @@ public class SkillTreeView : MonoBehaviour {
 
             // TODO save connectors
         }
+    }
+
+    private void SpawnNode(SkillTreeNodeData nodeData) {
+        var v = Instantiate(_nodePrefab, _nodeHolder);
+        ((RectTransform)v.transform).anchoredPosition = nodeData.Position;
+        v.Setup(nodeData);
+        _nodeViews[nodeData.Id] = v;
     }
 }
 }

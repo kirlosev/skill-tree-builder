@@ -52,6 +52,8 @@ public class SkillTreeNodeWindow : MonoBehaviour {
 
             SpawnLine(d.Key, d.Value);
         }
+
+        _window.BringToTop();
     }
 
     private void SpawnLine(string key, string value) {

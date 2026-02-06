@@ -24,6 +24,7 @@ public class SkillTreeData {
     [JsonProperty("version")] public int Version;
     [JsonProperty("id")] public string Id;
     [JsonProperty("anchor_position")] public Vector2 AnchorPosition;
+    [JsonProperty("grid_size")] public int GridSize = 48;
     [JsonProperty("nodes")] public List<SkillTreeNodeData> Nodes = new();
     [JsonProperty("connectors")] public List<SkillTreeConnectorData> Connectors = new();
 }

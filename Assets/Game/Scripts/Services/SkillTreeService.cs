@@ -9,17 +9,20 @@ public class SkillTreeService : MonoBehaviour {
     public static SkillTreeService Instance;
 
     public event Action<SkillTreeData> TreeCreated;
+    public event Action<SkillTreeNodeData> NodeAdded;
     public event Action<string> Exported;
 
     private SkillTreeData _data;
+    private int _lastNodeId;
 
     private void Awake() {
         Instance = this;
     }
 
     public void CreateNewTree() {
+        _lastNodeId = 0;
         var firstNodeData = new SkillTreeNodeData() {
-            Id = 0, Position = Vector2.zero, Data = new()
+            Id = _lastNodeId, Position = Vector2.zero, Data = new()
         };
         _data = new SkillTreeData() {
             Id = "new_tree",
@@ -32,6 +35,23 @@ public class SkillTreeService : MonoBehaviour {
 
     public void LoadTree() {
         throw new NotImplementedException();
+        // TODO set max node id
+        //  _lastNodeId =
+    }
+
+    public void AddNode() {
+        if (_data == null) {
+            return;
+        }
+
+        _lastNodeId++;
+        var lastNode = _data.Nodes[_data.Nodes.Count - 1];
+        var pos = lastNode.Position + Vector2.right * _data.GridSize * 2f;
+        var nodeData = new SkillTreeNodeData() {
+            Id = _lastNodeId, Position = pos, Data = new()
+        };
+        _data.Nodes.Add(nodeData);
+        NodeAdded?.Invoke(nodeData);
     }
 
     public void ExportTree() {
