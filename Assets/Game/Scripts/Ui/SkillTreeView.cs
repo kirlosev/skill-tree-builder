@@ -1,8 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Services;
 using StbData;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Ui {
 public class SkillTreeView : MonoBehaviour {
@@ -74,6 +74,18 @@ public class SkillTreeView : MonoBehaviour {
         ((RectTransform)v.transform).anchoredPosition = nodeData.Position;
         v.Setup(nodeData);
         _nodeViews[nodeData.Id] = v;
+    }
+
+    public SkillTreeNodeView GetNodeOnPosition(Vector2 position) {
+        foreach (var (id, view) in _nodeViews) {
+            if (view.ContainsPosition(position)) {
+                Debug.Log($"{id} contains {position}");
+                return view;
+            }
+        }
+
+        Debug.Log($"None of views contain {position}");
+        return null;
     }
 }
 }

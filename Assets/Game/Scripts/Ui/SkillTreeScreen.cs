@@ -1,9 +1,15 @@
+using System;
 using StbData;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Ui {
 public class SkillTreeScreen : UiScreen, IBeginDragHandler, IDragHandler, IEndDragHandler {
+    public static SkillTreeScreen Instance;
+
+    public event Action<Vector2> StartedDrag;
+    public event Action<Vector2> EndedDrag;
+
     [SerializeField] private SkillTreeView _skillTree;
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _friction = 15f;
@@ -12,15 +18,12 @@ public class SkillTreeScreen : UiScreen, IBeginDragHandler, IDragHandler, IEndDr
     private Vector2 _treeVelocity;
 
     private void Awake() {
+        Instance = this;
         _skillTreeRect = (RectTransform)_skillTree.transform;
     }
 
     protected override void TurnOnOffByDefault() {
         TurnOn();
-    }
-
-    public void Setup(SkillTreeData skillTreeData) {
-        _skillTree.Setup(skillTreeData);
     }
 
     private void Update() {
@@ -30,6 +33,7 @@ public class SkillTreeScreen : UiScreen, IBeginDragHandler, IDragHandler, IEndDr
 
     public void OnBeginDrag(PointerEventData eventData) {
         _treeVelocity = Vector3.zero;
+        StartedDrag?.Invoke(eventData.position);
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -37,6 +41,11 @@ public class SkillTreeScreen : UiScreen, IBeginDragHandler, IDragHandler, IEndDr
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        EndedDrag?.Invoke(eventData.position);
+    }
+
+    public SkillTreeNodeView GetNodeOnPosition(Vector2 position) {
+        return _skillTree.GetNodeOnPosition(position);
     }
 }
 }

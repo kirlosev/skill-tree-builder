@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using StbData;
+using Ui;
 using UnityEngine;
 
 namespace Services {
@@ -62,6 +63,19 @@ public class SkillTreeService : MonoBehaviour {
         };
         var json = JsonConvert.SerializeObject(_data, settings);
         Exported?.Invoke(json);
+    }
+
+    public void LinkNodes(SkillTreeNodeView fromNode, SkillTreeNodeView toNode) {
+        var link = new SkillTreeLinkData() {
+            FromNodeId = fromNode.Data.Id,
+            ToNodeId = toNode.Data.Id,
+            IsTwoWay = true
+        };
+        _data.Links.Add(link);
+    }
+
+    public void RemoveLink(SkillTreeNodeView fromNode, SkillTreeNodeView toNode) {
+        throw new NotImplementedException();
     }
 }
 }

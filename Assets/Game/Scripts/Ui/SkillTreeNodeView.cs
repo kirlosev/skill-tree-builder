@@ -1,3 +1,5 @@
+using System;
+using Services;
 using StbData;
 using TMPro;
 using UnityEngine;
@@ -27,7 +29,7 @@ public class SkillTreeNodeView : MonoBehaviour, IPointerClickHandler, IDragHandl
     }
 
     public void OnPointerClick(PointerEventData eventData) {
-        if (_isDragged) {
+        if (_isDragged || LinkToolService.Instance.IsEnabled) {
             return;
         }
 
@@ -35,6 +37,11 @@ public class SkillTreeNodeView : MonoBehaviour, IPointerClickHandler, IDragHandl
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
+        if (LinkToolService.Instance.IsEnabled) {
+            SkillTreeScreen.Instance.OnBeginDrag(eventData);
+            return;
+        }
+
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             _parent,
             eventData.position,
@@ -46,6 +53,10 @@ public class SkillTreeNodeView : MonoBehaviour, IPointerClickHandler, IDragHandl
     }
 
     public void OnDrag(PointerEventData eventData) {
+        if (LinkToolService.Instance.IsEnabled) {
+            return;
+        }
+
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             _parent,
             eventData.position,
@@ -57,8 +68,19 @@ public class SkillTreeNodeView : MonoBehaviour, IPointerClickHandler, IDragHandl
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        if (LinkToolService.Instance.IsEnabled) {
+            SkillTreeScreen.Instance.OnEndDrag(eventData);
+            return;
+        }
+
         Data.Position = _rect.anchoredPosition;
         _isDragged = false;
+    }
+
+    public bool ContainsPosition(Vector2 position) {
+        return RectTransformUtility.RectangleContainsScreenPoint(
+            _rect, position, Camera.main
+        );
     }
 }
 }

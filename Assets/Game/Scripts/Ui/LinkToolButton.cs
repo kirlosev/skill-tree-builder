@@ -17,16 +17,16 @@ public class LinkToolButton : MonoBehaviour {
     }
 
     private void OnClicked() {
-        ToolboxService.Instance.ToggleLinkTool();
+        LinkToolService.Instance.ToggleLinkTool();
     }
 
     private void Start() {
-        ToolboxService.Instance.Changed += OnToolChanged;
+        LinkToolService.Instance.Changed += OnToolChanged;
         Refresh();
     }
 
     private void OnDestroy() {
-        ToolboxService.Instance.Changed -= OnToolChanged;
+        LinkToolService.Instance.Changed -= OnToolChanged;
     }
 
     private void OnToolChanged() {
@@ -34,7 +34,7 @@ public class LinkToolButton : MonoBehaviour {
     }
 
     private void Refresh() {
-        var isOn = ToolboxService.Instance.IsLinkToolEnabled;
+        var isOn = LinkToolService.Instance.IsEnabled;
         _background.sprite = isOn ? _backgroundOnSprite : _backgroundOffSprite;
         _background.color = isOn ? _backgroundOnColor : Color.white;
     }
