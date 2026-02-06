@@ -28,7 +28,7 @@ public class SkillTreeService : MonoBehaviour {
             Id = "new_tree",
             Nodes = new List<SkillTreeNodeData>() { firstNodeData },
             AnchorPosition = Vector2.zero,
-            Connectors = new List<SkillTreeConnectorData>()
+            Links = new List<SkillTreeLinkData>()
         };
         TreeCreated?.Invoke(_data);
     }

@@ -2,19 +2,20 @@ using System.Collections.Generic;
 using Services;
 using StbData;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Ui {
 public class SkillTreeView : MonoBehaviour {
     [SerializeField] private SkillTreeNodeView _nodePrefab;
-    [SerializeField] private SkillTreeConnectorView _connectorPrefab;
+    [SerializeField] private SkillTreeLinkView _linkPrefab;
 
     [SerializeField] private RectTransform _nodeHolder;
-    [SerializeField] private RectTransform _connectorHolder;
+    [SerializeField] private RectTransform _linkHolder;
 
     private RectTransform _rect;
     private SkillTreeData _data;
     private Dictionary<int, SkillTreeNodeView> _nodeViews = new();
-    private List<SkillTreeConnectorView> _connectorViews = new();
+    private List<SkillTreeLinkView> _linkViews = new();
 
     private void Awake() {
         _rect = (RectTransform)transform;
@@ -45,10 +46,10 @@ public class SkillTreeView : MonoBehaviour {
         }
         _nodeViews.Clear();
 
-        foreach (Transform c in _connectorHolder) {
+        foreach (Transform c in _linkHolder) {
             Destroy(c.gameObject);
         }
-        _connectorViews.Clear();
+        _linkViews.Clear();
     }
 
     public void Setup(SkillTreeData data) {
@@ -58,13 +59,13 @@ public class SkillTreeView : MonoBehaviour {
             SpawnNode(n);
         }
 
-        foreach (var c in _data.Connectors) {
+        foreach (var c in _data.Links) {
             var fromView = _nodeViews[c.FromNodeId];
             var toView = _nodeViews[c.ToNodeId];
-            var v = Instantiate(_connectorPrefab, fromView.Pos, Quaternion.identity, _connectorHolder);
+            var v = Instantiate(_linkPrefab, fromView.Pos, Quaternion.identity, _linkHolder);
             v.Setup(c, fromView, toView);
 
-            // TODO save connectors
+            // TODO save links
         }
     }
 

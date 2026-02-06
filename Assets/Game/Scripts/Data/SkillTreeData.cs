@@ -13,7 +13,7 @@ public class SkillTreeNodeData {
 }
 
 [Serializable]
-public class SkillTreeConnectorData {
+public class SkillTreeLinkData {
     [JsonProperty("from_id")] public int FromNodeId;
     [JsonProperty("to_id")] public int ToNodeId;
     [JsonProperty("is_two_way")] public bool IsTwoWay = true;
@@ -26,6 +26,6 @@ public class SkillTreeData {
     [JsonProperty("anchor_position")] public Vector2 AnchorPosition;
     [JsonProperty("grid_size")] public int GridSize = 48;
     [JsonProperty("nodes")] public List<SkillTreeNodeData> Nodes = new();
-    [JsonProperty("connectors")] public List<SkillTreeConnectorData> Connectors = new();
+    [JsonProperty("links")] public List<SkillTreeLinkData> Links = new();
 }
 }
