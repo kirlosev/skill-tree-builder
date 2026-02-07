@@ -26,6 +26,7 @@ public class SkillTreeView : MonoBehaviour {
         SkillTreeService.Instance.NodeAdded += OnNodeAdded;
         SkillTreeService.Instance.LinkAdded += OnLinkAdded;
         SkillTreeService.Instance.RemovedLink += OnLinkRemoved;
+        SkillTreeService.Instance.RemovedNode += OnNodeRemoved;
     }
 
     private void OnDestroy() {
@@ -33,6 +34,7 @@ public class SkillTreeView : MonoBehaviour {
         SkillTreeService.Instance.NodeAdded -= OnNodeAdded;
         SkillTreeService.Instance.LinkAdded -= OnLinkAdded;
         SkillTreeService.Instance.RemovedLink -= OnLinkRemoved;
+        SkillTreeService.Instance.RemovedNode -= OnNodeRemoved;
     }
 
     private void OnNewTreeCreated(SkillTreeData newTreeData) {
@@ -57,6 +59,13 @@ public class SkillTreeView : MonoBehaviour {
                 _linkViews.RemoveAt(i);
             }
         }
+    }
+
+    private void OnNodeRemoved(SkillTreeNodeData nodeData) {
+        var nodeId = nodeData.Id;
+        var view = _nodeViews[nodeId];
+        _nodeViews.Remove(nodeId);
+        Destroy(view.gameObject);
     }
 
     private void RemoveCurrentTree() {

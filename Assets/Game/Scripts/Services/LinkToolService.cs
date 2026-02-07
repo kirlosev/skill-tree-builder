@@ -3,7 +3,7 @@ using Ui;
 using UnityEngine;
 
 namespace Services {
-public class LinkToolService : MonoBehaviour {
+public class LinkToolService : MonoBehaviour, ITool {
     public static LinkToolService Instance;
 
     public event Action Changed;
@@ -58,7 +58,7 @@ public class LinkToolService : MonoBehaviour {
         _fromNode = null;
     }
 
-    public void ToggleLinkTool() {
+    public void Toggle() {
         IsEnabled = !IsEnabled;
         Changed?.Invoke();
     }

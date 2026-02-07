@@ -13,6 +13,7 @@ public class SkillTreeService : MonoBehaviour {
     public event Action<SkillTreeData> TreeCreated;
     public event Action<SkillTreeNodeData> NodeAdded;
     public event Action<SkillTreeLinkData> LinkAdded;
+    public event Action<SkillTreeNodeData> RemovedNode;
     public event Action<int, int> RemovedLink;
     public event Action<string> Exported;
 
@@ -56,7 +57,7 @@ public class SkillTreeService : MonoBehaviour {
 
         _lastNodeId++;
         var lastNode = _data.Nodes[_data.Nodes.Count - 1];
-        var pos = lastNode.Position + Vector2.right * _data.GridSize * 2f;
+        var pos = lastNode.Position + Vector2.right * (_data.GridSize * 2f);
         var nodeData = new SkillTreeNodeData() {
             Id = _lastNodeId, Position = pos, Data = new()
         };
@@ -95,6 +96,28 @@ public class SkillTreeService : MonoBehaviour {
             x.ToNodeId == fromNodeId && x.FromNodeId == toNodeId
         );
         RemovedLink?.Invoke(fromNodeId, toNodeId);
+    }
+
+    public void DeleteNode(SkillTreeNodeView nodeView) {
+        var data = nodeView.Data;
+        var nodeId = data.Id;
+
+        var rmLinks = new List<SkillTreeLinkData>();
+        foreach (var l in _data.Links) {
+            if (l.FromNodeId == nodeId || l.ToNodeId == nodeId) {
+                rmLinks.Add(l);
+            }
+        }
+
+        foreach (var rml in rmLinks) {
+            var fromNodeId = rml.FromNodeId;
+            var toNodeId = rml.ToNodeId;
+            _data.Links.Remove(rml);
+            RemovedLink?.Invoke(fromNodeId, toNodeId);
+        }
+
+        _data.Nodes.RemoveAll(x => x.Id == nodeId);
+        RemovedNode?.Invoke(data);
     }
 
     public void ExportTree() {

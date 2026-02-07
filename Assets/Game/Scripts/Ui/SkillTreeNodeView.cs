@@ -33,10 +33,19 @@ public class SkillTreeNodeView : MonoBehaviour, IPointerClickHandler, IDragHandl
             return;
         }
 
+        if (DeleteToolService.Instance.IsEnabled) {
+            SkillTreeService.Instance.DeleteNode(this);
+            return;
+        }
+
         WindowsScreen.Instance.ShowNodeWindow(this);
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
+        if (DeleteToolService.Instance.IsEnabled) {
+            return;
+        }
+
         if (LinkToolService.Instance.IsEnabled) {
             SkillTreeScreen.Instance.OnBeginDrag(eventData);
             return;
@@ -53,7 +62,7 @@ public class SkillTreeNodeView : MonoBehaviour, IPointerClickHandler, IDragHandl
     }
 
     public void OnDrag(PointerEventData eventData) {
-        if (LinkToolService.Instance.IsEnabled) {
+        if (LinkToolService.Instance.IsEnabled || DeleteToolService.Instance.IsEnabled) {
             return;
         }
 
@@ -68,6 +77,10 @@ public class SkillTreeNodeView : MonoBehaviour, IPointerClickHandler, IDragHandl
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        if (DeleteToolService.Instance.IsEnabled) {
+            return;
+        }
+
         if (LinkToolService.Instance.IsEnabled) {
             SkillTreeScreen.Instance.OnEndDrag(eventData);
             return;
