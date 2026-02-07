@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 namespace Ui {
 public class HudScreen : UiScreen {
+    [SerializeField] private Button _importTreeButton;
     [SerializeField] private Button _newTreeButton;
     [SerializeField] private Button _addNodeButton;
     [SerializeField] private Button _exportButton;
@@ -13,9 +14,14 @@ public class HudScreen : UiScreen {
     }
 
     private void Awake() {
+        _importTreeButton.onClick.AddListener(OnImportTreeClicked);
         _newTreeButton.onClick.AddListener(OnNewTreeClicked);
         _addNodeButton.onClick.AddListener(OnAddNodeClicked);
         _exportButton.onClick.AddListener(OnExportClicked);
+    }
+
+    private void OnImportTreeClicked() {
+        ImportTreeScreen.Instance.TurnOn();
     }
 
     private void OnNewTreeClicked() {

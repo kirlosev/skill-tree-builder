@@ -277,7 +277,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -286,6 +286,28 @@ TextureImporter:
       bones: []
       spriteID: 3635b6559ad74436d9c03d81d7dd421e
       internalID: -709526606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windows_Icons_7
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 134
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e2f43966fd3a46f580390b1fc28ac4a
+      internalID: 1676829021
       vertices: []
       indices: 
       edges: []
@@ -312,6 +334,7 @@ TextureImporter:
       Windows_Icons_4: -994851195
       Windows_Icons_5: -91615702
       Windows_Icons_6: -709526606
+      Windows_Icons_7: 1676829021
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

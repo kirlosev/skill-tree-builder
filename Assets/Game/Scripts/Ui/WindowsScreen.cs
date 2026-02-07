@@ -16,6 +16,26 @@ public class WindowsScreen : UiScreen {
         Instance = this;
     }
 
+    protected virtual void Start() {
+        base.Start();
+        SkillTreeService.Instance.TreeCreated += OnTreeCreated;
+    }
+
+    private void OnDestroy() {
+        SkillTreeService.Instance.TreeCreated -= OnTreeCreated;
+    }
+
+    private void OnTreeCreated(SkillTreeData data) {
+        CloseAllWindows();
+    }
+
+    private void CloseAllWindows() {
+        foreach (var (id, view) in _nodeWindows) {
+            Destroy(view.gameObject);
+        }
+        _nodeWindows.Clear();
+    }
+
     protected override void TurnOnOffByDefault() {
         TurnOn();
     }

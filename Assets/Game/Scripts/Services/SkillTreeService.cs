@@ -37,10 +37,16 @@ public class SkillTreeService : MonoBehaviour {
         TreeCreated?.Invoke(_data);
     }
 
-    public void LoadTree() {
-        throw new NotImplementedException();
-        // TODO set max node id
-        //  _lastNodeId =
+    public void LoadTree(string json) {
+        var jsonContent = json;
+        var settings = new JsonSerializerSettings
+        {
+            Converters = new List<JsonConverter> { new Vector2Converter() }
+        };
+
+        _data = JsonConvert.DeserializeObject<SkillTreeData>(jsonContent, settings);
+        _lastNodeId = _data.Nodes.Max(x => x.Id);
+        TreeCreated?.Invoke(_data);
     }
 
     public void AddNode() {
