@@ -10,7 +10,7 @@ public class SkillTreeNodeViewLinkEntry : MonoBehaviour {
     [SerializeField] private Button _deleteButton;
     [SerializeField] private TMP_InputField _valueInput;
 
-    private int _nodeId;
+    public int NodeId { get; private set; }
 
     private void Awake() {
         _deleteButton.onClick.AddListener(OnDeleteClicked);
@@ -22,8 +22,8 @@ public class SkillTreeNodeViewLinkEntry : MonoBehaviour {
     }
 
     public void Setup(int nodeId) {
-        _nodeId = nodeId;
-        _valueInput.SetTextWithoutNotify(_nodeId.ToString());
+        NodeId = nodeId;
+        _valueInput.SetTextWithoutNotify(NodeId.ToString());
     }
 }
 }

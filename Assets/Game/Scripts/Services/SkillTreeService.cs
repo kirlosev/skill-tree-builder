@@ -13,6 +13,7 @@ public class SkillTreeService : MonoBehaviour {
     public event Action<SkillTreeData> TreeCreated;
     public event Action<SkillTreeNodeData> NodeAdded;
     public event Action<SkillTreeLinkData> LinkAdded;
+    public event Action<int, int> RemovedLink;
     public event Action<string> Exported;
 
     private SkillTreeData _data;
@@ -82,8 +83,12 @@ public class SkillTreeService : MonoBehaviour {
         return _data.Links.Where(x => x.FromNodeId == id).Select(x=>x.ToNodeId).ToList();
     }
 
-    public void RemoveLink(SkillTreeNodeView fromNode, SkillTreeNodeView toNode) {
-        throw new NotImplementedException();
+    public void RemoveLink(int fromNodeId, int toNodeId) {
+        _data.Links.RemoveAll(x =>
+            x.FromNodeId == fromNodeId && x.ToNodeId == toNodeId ||
+            x.ToNodeId == fromNodeId && x.FromNodeId == toNodeId
+        );
+        RemovedLink?.Invoke(fromNodeId, toNodeId);
     }
 
     public void ExportTree() {

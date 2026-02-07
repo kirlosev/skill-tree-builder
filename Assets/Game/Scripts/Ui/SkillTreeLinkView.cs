@@ -7,9 +7,10 @@ public class SkillTreeLinkView : MonoBehaviour {
 
     private RectTransform _parent;
     private RectTransform _rect;
-    private SkillTreeLinkData _data;
     private SkillTreeNodeView _fromView;
     private SkillTreeNodeView _toView;
+
+    public SkillTreeLinkData Data { get; private set; }
 
     private void Awake() {
         _parent = (RectTransform)transform.parent;
@@ -17,7 +18,7 @@ public class SkillTreeLinkView : MonoBehaviour {
     }
 
     public void Setup(SkillTreeLinkData data, SkillTreeNodeView fromView, SkillTreeNodeView toView) {
-        _data = data;
+        Data = data;
         _fromView = fromView;
         _toView = toView;
     }

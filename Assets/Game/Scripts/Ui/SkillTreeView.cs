@@ -25,12 +25,14 @@ public class SkillTreeView : MonoBehaviour {
         SkillTreeService.Instance.TreeCreated += OnNewTreeCreated;
         SkillTreeService.Instance.NodeAdded += OnNodeAdded;
         SkillTreeService.Instance.LinkAdded += OnLinkAdded;
+        SkillTreeService.Instance.RemovedLink += OnLinkRemoved;
     }
 
     private void OnDestroy() {
         SkillTreeService.Instance.TreeCreated -= OnNewTreeCreated;
         SkillTreeService.Instance.NodeAdded -= OnNodeAdded;
         SkillTreeService.Instance.LinkAdded -= OnLinkAdded;
+        SkillTreeService.Instance.RemovedLink -= OnLinkRemoved;
     }
 
     private void OnNewTreeCreated(SkillTreeData newTreeData) {
@@ -44,6 +46,17 @@ public class SkillTreeView : MonoBehaviour {
 
     private void OnLinkAdded(SkillTreeLinkData newLinkData) {
         SpawnLink(newLinkData);
+    }
+
+    private void OnLinkRemoved(int fromNodeId, int toNodeId) {
+        for (var i = _linkViews.Count - 1; i >= 0; --i) {
+            var v = _linkViews[i];
+            if (v.Data.FromNodeId == fromNodeId && v.Data.ToNodeId == toNodeId ||
+                v.Data.FromNodeId == toNodeId && v.Data.ToNodeId == fromNodeId) {
+                Destroy(v.gameObject);
+                _linkViews.RemoveAt(i);
+            }
+        }
     }
 
     private void RemoveCurrentTree() {
@@ -82,6 +95,7 @@ public class SkillTreeView : MonoBehaviour {
         var toView = _nodeViews[linkData.ToNodeId];
         var v = Instantiate(_linkPrefab, _linkHolder);
         v.Setup(linkData, fromView, toView);
+        _linkViews.Add(v);
     }
 
     public SkillTreeNodeView GetNodeOnPosition(Vector2 position) {

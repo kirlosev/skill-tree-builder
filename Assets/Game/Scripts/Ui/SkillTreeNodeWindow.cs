@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Services;
 using StbData;
 using TMPro;
 using UnityEngine;
@@ -95,7 +96,8 @@ public class SkillTreeNodeWindow : MonoBehaviour {
     }
 
     private void OnLinkLineDeleted(SkillTreeNodeViewLinkEntry line) {
-        throw new NotImplementedException();
+        SkillTreeService.Instance.RemoveLink(_data.Id, line.NodeId);
+        _linkLines.Remove(line.NodeId);
     }
 }
 }
