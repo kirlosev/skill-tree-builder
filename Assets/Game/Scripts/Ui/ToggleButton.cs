@@ -26,13 +26,6 @@ public abstract class ToggleButton : MonoBehaviour {
     protected virtual void OnDestroy() {
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(Hotkey)) {
-            OnClicked();
-            Refresh();
-        }
-    }
-
     protected void Refresh() {
         _background.sprite = IsOn ? _backgroundOnSprite : _backgroundOffSprite;
         _background.color = IsOn ? _backgroundOnColor : Color.white;

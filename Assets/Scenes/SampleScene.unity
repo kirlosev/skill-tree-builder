@@ -947,7 +947,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Delete Tool [D]'
+  m_text: Delete Tool
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 68971c91086124a69ba4a48f74d8993c, type: 2}
   m_sharedMaterial: {fileID: 7119928736885697886, guid: 68971c91086124a69ba4a48f74d8993c, type: 2}
@@ -4239,7 +4239,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -91615702, guid: 0debfb7809efd4230a955d8299eaf1ad, type: 3}
+  m_Sprite: {fileID: -1801707710, guid: 0debfb7809efd4230a955d8299eaf1ad, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4383,7 +4383,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Link Tool [C]'
+  m_text: Link Tool
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 68971c91086124a69ba4a48f74d8993c, type: 2}
   m_sharedMaterial: {fileID: 7119928736885697886, guid: 68971c91086124a69ba4a48f74d8993c, type: 2}
@@ -6045,7 +6045,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Add Node [A]'
+  m_text: Add Node
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 68971c91086124a69ba4a48f74d8993c, type: 2}
   m_sharedMaterial: {fileID: 7119928736885697886, guid: 68971c91086124a69ba4a48f74d8993c, type: 2}
@@ -6159,11 +6159,11 @@ RectTransform:
   - {fileID: 1207053851}
   m_Father: {fileID: 848943239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -240}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 408, y: 48}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1934765463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6781,7 +6781,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -144}
+  m_AnchoredPosition: {x: 0, y: -168}
   m_SizeDelta: {x: 408, y: 48}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2038549094
@@ -7213,7 +7213,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -192}
+  m_AnchoredPosition: {x: 0, y: -216}
   m_SizeDelta: {x: 408, y: 48}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2090056663
