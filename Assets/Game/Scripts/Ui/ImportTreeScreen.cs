@@ -28,6 +28,7 @@ public class ImportTreeScreen : UiScreen {
     private void OnImportClicked() {
         var json = _jsonInputField.text;
         SkillTreeService.Instance.LoadTree(json);
+        TurnOff();
     }
 }
 }
