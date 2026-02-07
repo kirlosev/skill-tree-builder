@@ -14,10 +14,13 @@ public class SkillTreeNodeWindow : MonoBehaviour {
     [SerializeField] private RectTransform _dataEntriesHolder;
     [SerializeField] private SkillTreeNodeViewDataEntry _dataEntryPrefab;
     [SerializeField] private Button _addDataLineButton;
+    [SerializeField] private RectTransform _linksEntriesHolder;
+    [SerializeField] private SkillTreeNodeViewLinkEntry _linkEntryHolder;
 
     private Window _window;
     private SkillTreeNodeData _data;
-    private Dictionary<string, SkillTreeNodeViewDataEntry> _lines = new();
+    private Dictionary<string, SkillTreeNodeViewDataEntry> _dataLines = new();
+    private Dictionary<int, SkillTreeNodeViewLinkEntry> _linkLines = new();
 
     private void Awake() {
         _window = GetComponent<Window>();
@@ -36,43 +39,63 @@ public class SkillTreeNodeWindow : MonoBehaviour {
             return;
         }
         _data.Data.Add(defaultKey, defaultValue);
-        SpawnLine(defaultKey, defaultValue);
+        SpawnDataLine(defaultKey, defaultValue);
     }
 
-    public void Setup(SkillTreeNodeData data) {
+    public void Setup(SkillTreeNodeData data, List<int> linkedNodesIds) {
         _data = data;
 
         _title.SetText($"Node {_data.Id}");
         _position.SetText($"{_data.Position.x},{_data.Position.y}");
         foreach (var d in _data.Data) {
-            if (_lines.TryGetValue(d.Key, out var line)) {
+            if (_dataLines.TryGetValue(d.Key, out var line)) {
                 line.Setup(d.Key, d.Value);
                 continue;
             }
 
-            SpawnLine(d.Key, d.Value);
+            SpawnDataLine(d.Key, d.Value);
+        }
+
+        foreach (var id in linkedNodesIds) {
+            if (_linkLines.TryGetValue(id, out var line)) {
+                line.Setup(id);
+                continue;
+            }
+
+            SpawnLinkLine(id);
         }
 
         _window.BringToTop();
     }
 
-    private void SpawnLine(string key, string value) {
+    private void SpawnDataLine(string key, string value) {
         var line = Instantiate(_dataEntryPrefab, _dataEntriesHolder);
         line.Setup(key, value);
         line.Deleted += OnDataLineDeleted;
         line.Updated += OnDataLineUpdated;
-        _lines.Add(key, line);
+        _dataLines.Add(key, line);
     }
 
     private void OnDataLineDeleted(SkillTreeNodeViewDataEntry line) {
         var (key, value) = line.KeyValue;
         _data.Data.Remove(key);
-        _lines.Remove(key);
+        _dataLines.Remove(key);
     }
 
     private void OnDataLineUpdated(SkillTreeNodeViewDataEntry line) {
         var (key, value) = line.KeyValue;
         _data.Data[key] = value;
+    }
+
+    private void SpawnLinkLine(int id) {
+        var line = Instantiate(_linkEntryHolder, _linksEntriesHolder);
+        line.Setup(id);
+        line.Deleted += OnLinkLineDeleted;
+        _linkLines.Add(id, line);
+    }
+
+    private void OnLinkLineDeleted(SkillTreeNodeViewLinkEntry line) {
+        throw new NotImplementedException();
     }
 }
 }

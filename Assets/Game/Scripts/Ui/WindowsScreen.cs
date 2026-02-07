@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Services;
 using StbData;
 using UnityEngine;
 
@@ -21,8 +22,9 @@ public class WindowsScreen : UiScreen {
 
     public void ShowNodeWindow(SkillTreeNodeView nodeView) {
         var data = nodeView.Data;
+        var links = SkillTreeService.Instance.GetNodeLinks(data.Id);
         if (_nodeWindows.TryGetValue(data.Id, out var window)) {
-            window.Setup(data);
+            window.Setup(data, links);
             return;
         }
 
@@ -36,7 +38,7 @@ public class WindowsScreen : UiScreen {
             out var localPos
         );
         ((RectTransform)window.transform).anchoredPosition = localPos;
-        window.Setup(data);
+        window.Setup(data, links);
         _nodeWindows.Add(data.Id, window);
     }
 

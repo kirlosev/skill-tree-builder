@@ -78,6 +78,14 @@ public class SkillTreeService : MonoBehaviour {
         LinkAdded?.Invoke(reverse);
     }
 
+    public List<int> GetNodeLinks(int id) {
+        return _data.Links.Where(x => x.FromNodeId == id).Select(x=>x.ToNodeId).ToList();
+    }
+
+    public void RemoveLink(SkillTreeNodeView fromNode, SkillTreeNodeView toNode) {
+        throw new NotImplementedException();
+    }
+
     public void ExportTree() {
         var settings = new JsonSerializerSettings
         {
@@ -86,10 +94,6 @@ public class SkillTreeService : MonoBehaviour {
         };
         var json = JsonConvert.SerializeObject(_data, settings);
         Exported?.Invoke(json);
-    }
-
-    public void RemoveLink(SkillTreeNodeView fromNode, SkillTreeNodeView toNode) {
-        throw new NotImplementedException();
     }
 }
 }
