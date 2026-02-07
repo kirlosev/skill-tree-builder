@@ -19,6 +19,17 @@ public class Window : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
         _parent = (RectTransform)transform.parent;
     }
 
+    private void Start() {
+        ClampPosition();
+    }
+
+    private void ClampPosition() {
+        var pos = _rect.anchoredPosition;
+        pos.x = Mathf.Clamp(pos.x, _rect.sizeDelta.x / 2f, _parent.sizeDelta.x - _rect.sizeDelta.x / 2f);
+        pos.y = Mathf.Clamp(pos.y, _rect.sizeDelta.y / 2f, _parent.sizeDelta.y - _rect.sizeDelta.y / 2f);
+        _rect.anchoredPosition = pos;
+    }
+
     private void OnCloseClicked() {
         Closed?.Invoke();
         Destroy(gameObject);
@@ -44,9 +55,8 @@ public class Window : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
             out var pos
         );
         pos += _offset;
-        pos.x = Mathf.Clamp(pos.x, _rect.sizeDelta.x / 2f, _parent.sizeDelta.x - _rect.sizeDelta.x / 2f);
-        pos.y = Mathf.Clamp(pos.y, _rect.sizeDelta.y / 2f, _parent.sizeDelta.y - _rect.sizeDelta.y / 2f);
         _rect.anchoredPosition = pos;
+        ClampPosition();
     }
 
     public void OnEndDrag(PointerEventData eventData)
