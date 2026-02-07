@@ -34,12 +34,19 @@ public class LinkToolService : MonoBehaviour {
         }
 
         var nodeView = SkillTreeScreen.Instance.GetNodeOnPosition(screenPos);
+        if (nodeView == null) {
+            return;
+        }
+
         _fromNode = nodeView;
         StartedLinking?.Invoke();
     }
 
     private void OnEndedDrag(Vector2 screenPos) {
         if (!IsEnabled) {
+            return;
+        }
+        if (_fromNode == null) {
             return;
         }
 
