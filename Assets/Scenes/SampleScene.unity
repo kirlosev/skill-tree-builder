@@ -4154,7 +4154,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Link Tool
+  m_text: 'Link Tool [C]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 68971c91086124a69ba4a48f74d8993c, type: 2}
   m_sharedMaterial: {fileID: 7119928736885697886, guid: 68971c91086124a69ba4a48f74d8993c, type: 2}
@@ -5816,7 +5816,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Add Node
+  m_text: 'Add Node [A]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 68971c91086124a69ba4a48f74d8993c, type: 2}
   m_sharedMaterial: {fileID: 7119928736885697886, guid: 68971c91086124a69ba4a48f74d8993c, type: 2}

@@ -29,6 +29,12 @@ public class LinkToolButton : MonoBehaviour {
         LinkToolService.Instance.Changed -= OnToolChanged;
     }
 
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.C)) {
+            OnClicked();
+        }
+    }
+
     private void OnToolChanged() {
         Refresh();
     }
