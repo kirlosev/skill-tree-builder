@@ -7,6 +7,7 @@ public class HudScreen : UiScreen {
     [SerializeField] private Button _importTreeButton;
     [SerializeField] private Button _newTreeButton;
     [SerializeField] private Button _addNodeButton;
+    [SerializeField] private Button _resetTreePositionButton;
     [SerializeField] private Button _exportButton;
 
     protected override void TurnOnOffByDefault() {
@@ -17,6 +18,7 @@ public class HudScreen : UiScreen {
         _importTreeButton.onClick.AddListener(OnImportTreeClicked);
         _newTreeButton.onClick.AddListener(OnNewTreeClicked);
         _addNodeButton.onClick.AddListener(OnAddNodeClicked);
+        _resetTreePositionButton.onClick.AddListener(OnResetTreePositionClicked);
         _exportButton.onClick.AddListener(OnExportClicked);
     }
 
@@ -30,6 +32,10 @@ public class HudScreen : UiScreen {
 
     private void OnAddNodeClicked() {
         SkillTreeService.Instance.AddNode();
+    }
+
+    private void OnResetTreePositionClicked() {
+        SkillTreeScreen.Instance.ResetTreePosition();
     }
 
     private void OnExportClicked() {

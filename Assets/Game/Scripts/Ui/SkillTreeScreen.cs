@@ -47,5 +47,10 @@ public class SkillTreeScreen : UiScreen, IBeginDragHandler, IDragHandler, IEndDr
     public SkillTreeNodeView GetNodeOnPosition(Vector2 position) {
         return _skillTree.GetNodeOnPosition(position);
     }
+
+    public void ResetTreePosition() {
+        _skillTreeRect.anchoredPosition = Vector2.zero;
+        _treeVelocity = Vector2.zero;
+    }
 }
 }
