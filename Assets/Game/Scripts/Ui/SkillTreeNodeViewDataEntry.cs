@@ -16,8 +16,8 @@ public class SkillTreeNodeViewDataEntry : MonoBehaviour {
 
     private void Awake() {
         _deleteButton.onClick.AddListener(OnDeleteClicked);
-        _keyInput.onSubmit.AddListener(OnKeyValueChanged);
-        _valueInput.onSubmit.AddListener(OnKeyValueChanged);
+        _keyInput.onDeselect.AddListener(OnKeyValueChanged);
+        _valueInput.onDeselect.AddListener(OnKeyValueChanged);
     }
 
     private void OnDeleteClicked() {

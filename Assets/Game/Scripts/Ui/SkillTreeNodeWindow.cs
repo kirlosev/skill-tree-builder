@@ -20,7 +20,7 @@ public class SkillTreeNodeWindow : MonoBehaviour {
 
     private Window _window;
     private SkillTreeNodeData _data;
-    private Dictionary<string, SkillTreeNodeViewDataEntry> _dataLines = new();
+    private List<SkillTreeNodeViewDataEntry> _dataLines = new();
     private Dictionary<int, SkillTreeNodeViewLinkEntry> _linkLines = new();
 
     private void Awake() {
@@ -48,12 +48,13 @@ public class SkillTreeNodeWindow : MonoBehaviour {
 
         _title.SetText($"Node {_data.Id}");
         _position.SetText($"{_data.Position.x},{_data.Position.y}");
-        foreach (var d in _data.Data) {
-            if (_dataLines.TryGetValue(d.Key, out var line)) {
-                line.Setup(d.Key, d.Value);
-                continue;
-            }
 
+        foreach (Transform t in _dataEntriesHolder) {
+            Destroy(t.gameObject);
+        }
+        _dataLines.Clear();
+
+        foreach (var d in _data.Data) {
             SpawnDataLine(d.Key, d.Value);
         }
 
@@ -74,18 +75,21 @@ public class SkillTreeNodeWindow : MonoBehaviour {
         line.Setup(key, value);
         line.Deleted += OnDataLineDeleted;
         line.Updated += OnDataLineUpdated;
-        _dataLines.Add(key, line);
+        _dataLines.Add(line);
     }
 
     private void OnDataLineDeleted(SkillTreeNodeViewDataEntry line) {
         var (key, value) = line.KeyValue;
         _data.Data.Remove(key);
-        _dataLines.Remove(key);
+        _dataLines.Remove(line);
     }
 
-    private void OnDataLineUpdated(SkillTreeNodeViewDataEntry line) {
-        var (key, value) = line.KeyValue;
-        _data.Data[key] = value;
+    private void OnDataLineUpdated(SkillTreeNodeViewDataEntry _) {
+        _data.Data.Clear();
+        foreach (var line in _dataLines) {
+            var (key, value) = line.KeyValue;
+            _data.Data[key] = value;
+        }
     }
 
     private void SpawnLinkLine(int id) {
