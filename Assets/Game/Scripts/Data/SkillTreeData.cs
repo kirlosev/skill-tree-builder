@@ -26,5 +26,6 @@ public class SkillTreeData {
     [JsonProperty("grid_size")] public int GridSize = 48;
     [JsonProperty("nodes")] public List<SkillTreeNodeData> Nodes = new();
     [JsonProperty("links")] public List<SkillTreeLinkData> Links = new();
+    [JsonProperty("defaults")] public SkillTreeNodeData NodeDataDefaults = new();
 }
 }

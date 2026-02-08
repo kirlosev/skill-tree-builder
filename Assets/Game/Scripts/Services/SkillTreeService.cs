@@ -16,6 +16,7 @@ public class SkillTreeService : MonoBehaviour {
     public event Action<SkillTreeNodeData> RemovedNode;
     public event Action<int, int> RemovedLink;
     public event Action<string> Exported;
+    public event Action<SkillTreeNodeData> NodeDataDefaultsUpdated;
 
     private SkillTreeData _data;
     private int _lastNodeId;
@@ -61,6 +62,10 @@ public class SkillTreeService : MonoBehaviour {
         var nodeData = new SkillTreeNodeData() {
             Id = _lastNodeId, Position = pos, Data = new()
         };
+        foreach (var (dKey, dValue) in _data.NodeDataDefaults.Data) {
+            nodeData.Data[dKey] = dValue;
+        }
+
         _data.Nodes.Add(nodeData);
         NodeAdded?.Invoke(nodeData);
     }
@@ -128,6 +133,15 @@ public class SkillTreeService : MonoBehaviour {
         };
         var json = JsonConvert.SerializeObject(_data, settings);
         Exported?.Invoke(json);
+    }
+
+    public SkillTreeNodeData GetDataDefaults() {
+        return _data.NodeDataDefaults;
+    }
+
+    public void SetNodeDataDefaults(SkillTreeNodeData data) {
+        _data.NodeDataDefaults = data;
+        NodeDataDefaultsUpdated?.Invoke(_data.NodeDataDefaults);
     }
 }
 }

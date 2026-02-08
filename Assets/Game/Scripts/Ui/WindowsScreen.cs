@@ -9,8 +9,10 @@ public class WindowsScreen : UiScreen {
 
     [SerializeField] private RectTransform _windowsHolder;
     [SerializeField] private SkillTreeNodeWindow _nodeWindowPrefab;
+    [SerializeField] private NodeDataDefaultsWindow _dataDefaultsWindowPrefab;
 
     private Dictionary<int, SkillTreeNodeWindow> _nodeWindows = new();
+    private NodeDataDefaultsWindow _dataDefaultsWindow;
 
     private void Awake() {
         Instance = this;
@@ -64,6 +66,29 @@ public class WindowsScreen : UiScreen {
 
     private void OnNodeWindowClosed(int id, SkillTreeNodeWindow nodeWindow) {
         _nodeWindows.Remove(id);
+    }
+
+    public void ShowDataDefaultsWindow() {
+        if (_dataDefaultsWindow != null) {
+            _dataDefaultsWindow.Setup();
+            return;
+        }
+
+        _dataDefaultsWindow = Instantiate(_dataDefaultsWindowPrefab, _windowsHolder);
+        _dataDefaultsWindow.Closed += OnDataDefaultsWindowClosed;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            _windowsHolder,
+            Input.mousePosition,
+            Camera.main,
+            out var localPos
+        );
+        ((RectTransform)_dataDefaultsWindow.transform).anchoredPosition = localPos;
+        _dataDefaultsWindow.Setup();
+    }
+
+    private void OnDataDefaultsWindowClosed(NodeDataDefaultsWindow _) {
+        _dataDefaultsWindow.Closed -= OnDataDefaultsWindowClosed;
+        _dataDefaultsWindow = null;
     }
 }
 }
