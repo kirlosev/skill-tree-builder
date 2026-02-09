@@ -47,11 +47,5 @@ public class HudScreen : UiScreen {
     private void OnEditDataDefaultsClicked() {
         WindowsScreen.Instance.ShowDataDefaultsWindow();
     }
-
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.A)) {
-            OnAddNodeClicked();
-        }
-    }
 }
 }
