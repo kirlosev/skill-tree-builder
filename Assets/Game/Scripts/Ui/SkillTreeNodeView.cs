@@ -73,6 +73,9 @@ public class SkillTreeNodeView : MonoBehaviour, IPointerClickHandler, IDragHandl
             out var pos
         );
         pos += _offset;
+        var gs = SkillTreeService.Instance.GetGridSize();
+        pos.x = Mathf.Round(pos.x / gs) * gs;
+        pos.y = Mathf.Round(pos.y / gs) * gs;
         _rect.anchoredPosition = pos;
     }
 

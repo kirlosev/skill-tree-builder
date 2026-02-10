@@ -139,6 +139,10 @@ public class SkillTreeService : MonoBehaviour {
         return _data.NodeDataDefaults;
     }
 
+    public float GetGridSize() {
+        return _data.GridSize;
+    }
+
     public void SetNodeDataDefaults(SkillTreeNodeData data) {
         _data.NodeDataDefaults = data;
         NodeDataDefaultsUpdated?.Invoke(_data.NodeDataDefaults);
