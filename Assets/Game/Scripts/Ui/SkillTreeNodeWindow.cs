@@ -90,6 +90,7 @@ public class SkillTreeNodeWindow : MonoBehaviour {
             var (key, value) = line.KeyValue;
             _data.Data[key] = value;
         }
+        SkillTreeService.Instance.RaiseNodeDataChanged(_data);
     }
 
     private void SpawnLinkLine(int id) {

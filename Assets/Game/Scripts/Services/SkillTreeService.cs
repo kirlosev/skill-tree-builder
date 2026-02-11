@@ -17,6 +17,7 @@ public class SkillTreeService : MonoBehaviour {
     public event Action<int, int> RemovedLink;
     public event Action<string> Exported;
     public event Action<SkillTreeNodeData> NodeDataDefaultsUpdated;
+    public event Action<SkillTreeNodeData> NodeDataChanged;
 
     private SkillTreeData _data;
     private int _lastNodeId;
@@ -146,6 +147,10 @@ public class SkillTreeService : MonoBehaviour {
     public void SetNodeDataDefaults(SkillTreeNodeData data) {
         _data.NodeDataDefaults = data;
         NodeDataDefaultsUpdated?.Invoke(_data.NodeDataDefaults);
+    }
+
+    public void RaiseNodeDataChanged(SkillTreeNodeData data) {
+        NodeDataChanged?.Invoke(data);
     }
 }
 }

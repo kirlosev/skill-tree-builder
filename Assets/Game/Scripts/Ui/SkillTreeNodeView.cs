@@ -25,8 +25,12 @@ public class SkillTreeNodeView : MonoBehaviour, IPointerClickHandler, IDragHandl
 
     public void Setup(SkillTreeNodeData data) {
         Data = data;
-        var text = data.Id.ToString();
-        if (data.Data.TryGetValue("title", out var title)) {
+        Refresh();
+    }
+
+    public void Refresh() {
+        var text = Data.Id.ToString();
+        if (Data.Data.TryGetValue("title", out var title)) {
             text = title;
         }
         _idText.SetText(text);
