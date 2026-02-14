@@ -30,7 +30,7 @@ public class SkillTreeNodeView : MonoBehaviour, IPointerClickHandler, IDragHandl
 
     public void Refresh() {
         var text = Data.Id.ToString();
-        if (Data.Data.TryGetValue("title", out var title)) {
+        if (Data.Data.TryGetValue("label", out var title)) {
             text = title;
         }
         _idText.SetText(text);
