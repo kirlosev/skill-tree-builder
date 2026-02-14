@@ -25,8 +25,8 @@ public class Window : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
 
     private void ClampPosition() {
         var pos = _rect.anchoredPosition;
-        pos.x = Mathf.Clamp(pos.x, _rect.sizeDelta.x / 2f, _parent.sizeDelta.x - _rect.sizeDelta.x / 2f);
-        pos.y = Mathf.Clamp(pos.y, _rect.sizeDelta.y / 2f, _parent.sizeDelta.y - _rect.sizeDelta.y / 2f);
+        pos.x = Mathf.Clamp(pos.x, _rect.sizeDelta.x / 2f, _parent.rect.width - _rect.sizeDelta.x / 2f);
+        pos.y = Mathf.Clamp(pos.y, _rect.sizeDelta.y / 2f, _parent.rect.height - _rect.sizeDelta.y / 2f);
         _rect.anchoredPosition = pos;
     }
 
