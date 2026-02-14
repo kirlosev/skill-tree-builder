@@ -29,7 +29,7 @@ public class SkillTreeService : MonoBehaviour {
     public void CreateNewTree() {
         _lastNodeId = 0;
         var firstNodeData = new SkillTreeNodeData() {
-            Id = _lastNodeId, Position = Vector2.zero, Data = new()
+            Id = _lastNodeId
         };
         _data = new SkillTreeData() {
             Id = "new_tree",
@@ -61,7 +61,7 @@ public class SkillTreeService : MonoBehaviour {
         var lastNode = _data.Nodes[_data.Nodes.Count - 1];
         var pos = lastNode.Position + Vector2.right * (_data.GridSize * 2f);
         var nodeData = new SkillTreeNodeData() {
-            Id = _lastNodeId, Position = pos, Data = new()
+            Id = _lastNodeId, Position = pos
         };
         foreach (var (dKey, dValue) in _data.NodeDataDefaults.Data) {
             nodeData.Data[dKey] = dValue;
