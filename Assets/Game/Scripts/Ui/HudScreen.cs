@@ -49,6 +49,10 @@ public class HudScreen : UiScreen {
     }
 
     private void OnEditDataDefaultsClicked() {
+        if (!SkillTreeService.Instance.HasTree) {
+            return;
+        }
+
         WindowsScreen.Instance.ShowDataDefaultsWindow();
     }
 

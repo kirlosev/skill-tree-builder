@@ -22,6 +22,8 @@ public class SkillTreeService : MonoBehaviour {
     private SkillTreeData _data;
     private int _lastNodeId;
 
+    public bool HasTree => _data != null;
+
     private void Awake() {
         Instance = this;
     }
