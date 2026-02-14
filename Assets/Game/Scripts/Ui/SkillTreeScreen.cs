@@ -52,5 +52,18 @@ public class SkillTreeScreen : UiScreen, IBeginDragHandler, IDragHandler, IEndDr
         _skillTreeRect.anchoredPosition = Vector2.zero;
         _treeVelocity = Vector2.zero;
     }
+
+    public void ZoomIn() {
+        var nextScale = Content.localScale.x + 0.25f;
+        Content.localScale = new Vector3(nextScale, nextScale, nextScale);
+    }
+
+    public void ZoomOut() {
+        var nextScale = Content.localScale.x - 0.25f;
+        if (nextScale <= 0f) {
+            return;
+        }
+        Content.localScale = new Vector3(nextScale, nextScale, nextScale);
+    }
 }
 }

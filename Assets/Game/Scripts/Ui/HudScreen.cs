@@ -10,6 +10,8 @@ public class HudScreen : UiScreen {
     [SerializeField] private Button _resetTreePositionButton;
     [SerializeField] private Button _exportButton;
     [SerializeField] private Button _editDataDefaultsButton;
+    [SerializeField] private Button _zoomInButton;
+    [SerializeField] private Button _zoomOutButton;
 
     protected override void TurnOnOffByDefault() {
         TurnOn();
@@ -22,6 +24,8 @@ public class HudScreen : UiScreen {
         _resetTreePositionButton.onClick.AddListener(OnResetTreePositionClicked);
         _exportButton.onClick.AddListener(OnExportClicked);
         _editDataDefaultsButton.onClick.AddListener(OnEditDataDefaultsClicked);
+        _zoomInButton.onClick.AddListener(OnZoomInClicked);
+        _zoomOutButton.onClick.AddListener(OnZoomOutClicked);
     }
 
     private void OnImportTreeClicked() {
@@ -46,6 +50,14 @@ public class HudScreen : UiScreen {
 
     private void OnEditDataDefaultsClicked() {
         WindowsScreen.Instance.ShowDataDefaultsWindow();
+    }
+
+    private void OnZoomInClicked() {
+        SkillTreeScreen.Instance.ZoomIn();
+    }
+
+    private void OnZoomOutClicked() {
+        SkillTreeScreen.Instance.ZoomOut();
     }
 }
 }
